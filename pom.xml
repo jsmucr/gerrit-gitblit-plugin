@@ -378,7 +378,7 @@ limitations under the License.
     <repository>
         <id>com.gitblit</id>
         <name>Gitblit</name>
-        <url>http://gitblit.github.io/gitblit-maven/</url>
+        <url>https://gitblit-org.github.io/gitblit-maven/</url>
         <layout>default</layout>
     </repository>
     <repository>
