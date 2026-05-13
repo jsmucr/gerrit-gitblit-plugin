@@ -20,7 +20,7 @@ limitations under the License.
   <artifactId>gitblit-plugin</artifactId>
   <description>GitBlit for Gerrit integrated as a plugin</description>
   <name>Gerrit - GitBlit Plugin</name>
-  <version>3.5.171.0-SNAPSHOT</version><!-- Gerrit API version followed by collapsed GitBlit version, followed by plugin version -->
+  <version>3.10.171.0-SNAPSHOT</version><!-- Gerrit API version followed by collapsed GitBlit version, followed by plugin version -->
   <licenses>
     <license>
       <name>Apache License 2.0</name>
@@ -29,7 +29,7 @@ limitations under the License.
   </licenses>
   <properties>
     <Gerrit-ApiType>plugin</Gerrit-ApiType>
-    <Gerrit-ApiVersion>3.5.6</Gerrit-ApiVersion>
+    <Gerrit-ApiVersion>3.10.9</Gerrit-ApiVersion>
     <JGit-Version>5.8.0.202006091008-r</JGit-Version>
     <GitBlit-Version>1.7.1</GitBlit-Version>
     <Wicket-Version>1.4.22</Wicket-Version>
@@ -241,7 +241,7 @@ limitations under the License.
                 <Implementation-Title>Plugin ${project.artifactId}</Implementation-Title>
                 <Implementation-Version>${project.version}</Implementation-Version>
                 <Gerrit-ApiType>${Gerrit-ApiType}</Gerrit-ApiType>
-                <Gerrit-ApiVersion>${Gerrit-ApiVersion}</Gerrit-ApiVersion>
+                <Gerrit-ApiVersion>3.10.9</Gerrit-ApiVersion>
                 <Gerrit-ReloadMode>${Gerrit-ReloadMode}</Gerrit-ReloadMode>
               </manifestEntries>
             </transformer>
