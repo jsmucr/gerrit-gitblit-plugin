@@ -1,25 +1,38 @@
-> **WARNING**
+> **NOTE**
 >
-> [Gitblit](https://github.com/gitblit/gitblit) is apparently no longer actively maintained. As of this writing, the last commit on its master branch was in June 2017. With that state of affairs it is unclear how long it will still be possible to get Gitblit to work inside Gerrit.
+> This is a fork of [tomaswolf/gerrit-gitblit-plugin](https://github.com/tomaswolf/gerrit-gitblit-plugin), updated to work with **Gerrit 3.10** on **Java 17**.
 >
-> > Gitblit is based on old libraries; Gerrit uses much newer ones. When running inside Gerrit, Gitblit needs to use the Gerrit versions of libraries they have in common (like JGit or Lucene). The gap is getting larger with each Gerrit release, and there will be a point where it cannot be bridged anymore.
->
-> In the long run, this is a dead end.
+> [Gitblit](https://github.com/gitblit/gitblit) is no longer actively maintained, but this plugin still works and provides a useful repository browser UI inside Gerrit.
 
 # Gerrit-GitBlit plugin
 
-This is a fork of the [official Gerrit-GitBlit plugin](https://gerrit.googlesource.com/plugins/gitblit/),
-forked originally from [master revision 28d2c98](https://gerrit.googlesource.com/plugins/gitblit/+/28d2c9823618812acd21ce64f89c7e0ac47ff2a8).
+Integrates [GitBlit 1.7.1](https://github.com/gitblit/gitblit) as a repository browser into [Gerrit](https://www.gerritcodereview.com/) as a Gerrit plugin.
 
-It integrates [GitBlit](https://github.com/gitblit/gitblit) as a repository browser into [Gerrit](https://code.google.com/p/gerrit/) as a Gerrit plugin.
+## Compatibility
 
-Pre-built jars (Java 8, before v2.14.171.0 Java 7) are available as **[releases](https://github.com/tomaswolf/gerrit-gitblit-plugin/releases)**. Pick one with a version number
-matching your Gerrit version. Version numbering for this plugin is the Gerrit API version it was built for, followed by the collapsed GitBlit version,
-followed by the plugin version.So "v2.9.1.162.2" is version 2 of this plugin, integrating GitBlit 1.6.2 into Gerrit 2.9.1.
+| Plugin version | Gerrit | Java |
+|---|---|---|
+| 3.10.171.0 | 3.4 – 3.10 | 11, 17 |
+| 3.3.171.0 (baseline) | 3.2 – 3.3 | 11 |
 
-> If you're running Gerrit 2.11 or newer, you might want to check whether the official plugin fulfills your needs. (To find a pre-built official plugin,
-> go to the [Gerrit CI server](https://gerrit-ci.gerritforge.com/), find the "Plugin-gitblit" job matching your Gerrit version, click the link, and download
-> the jar from "Last Successful Artifacts".)
+## Building
+
+```bash
+mvn package -DskipTests
+```
+
+The output jar is in `target/gitblit-plugin-*.jar`. Install it as `plugins/gitblit.jar` in your Gerrit site.
+
+## Changes from upstream (tomaswolf v3.2.171.0)
+
+- Fixed GitBlit Maven repository URL (moved to gitblit-org.github.io)
+- Upgraded maven-compiler-plugin to 3.11.0, target Java 11, disabled annotation processing
+- Fixed flexmark API changes (package renames, interface changes in 3.4 and 3.9)
+- Fixed Gerrit WebLink interface changes (additional parameters in 3.4)
+- Replaced `AuthRequest.forUser()` with `AuthRequest.Factory` (removed in 3.5)
+- Fixed `WebSession` method chaining causing `IncompatibleClassChangeError` at runtime
+- Removed `authenticateViewPages=true` fallback that caused redirect loops on Java 17
+- Removed `WebLinkInfo` `Target` parameter (removed in 3.9)
 
 ## Motivation
 
