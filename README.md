@@ -1,12 +1,10 @@
 > **NOTE**
 >
-> This is a fork of [tomaswolf/gerrit-gitblit-plugin](https://github.com/tomaswolf/gerrit-gitblit-plugin), updated to work with **Gerrit 3.10** on **Java 17**.
->
-> [Gitblit](https://github.com/gitblit/gitblit) is no longer actively maintained, but this plugin still works and provides a useful repository browser UI inside Gerrit.
+> This is a fork of [tomaswolf/gerrit-gitblit-plugin](https://github.com/tomaswolf/gerrit-gitblit-plugin), updated to work with **Gerrit 3.10** and **GitBlit 1.10.0** on **Java 17**.
 
 # Gerrit-GitBlit plugin
 
-Integrates [GitBlit 1.7.1](https://github.com/gitblit/gitblit) as a repository browser into [Gerrit](https://www.gerritcodereview.com/) as a Gerrit plugin.
+Integrates [GitBlit 1.10.0](https://github.com/gitblit-org/gitblit) as a repository browser into [Gerrit](https://www.gerritcodereview.com/) as a Gerrit plugin.
 
 ## Compatibility
 
@@ -33,6 +31,7 @@ The output jar is in `target/gitblit-plugin-*.jar`. Install it as `plugins/gitbl
 - Fixed `WebSession` method chaining causing `IncompatibleClassChangeError` at runtime
 - Removed `authenticateViewPages=true` fallback that caused redirect loops on Java 17
 - Removed `WebLinkInfo` `Target` parameter (removed in 3.9)
+- Upgraded GitBlit from 1.7.1 to 1.10.0 (clipboard.js copy-to-clipboard, security fixes)
 
 ## Credits
 
