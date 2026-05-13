@@ -34,6 +34,10 @@ The output jar is in `target/gitblit-plugin-*.jar`. Install it as `plugins/gitbl
 - Removed `authenticateViewPages=true` fallback that caused redirect loops on Java 17
 - Removed `WebLinkInfo` `Target` parameter (removed in 3.9)
 
+## Credits
+
+The 3.10 port was vibe-coded with Claude Opus 4.6 🤙
+
 ## Motivation
 
 The basic reason for doing this was to adapt the official plugin to work with a modern Gerrit (v2.9 or newer) and a modern GitBlit (v1.6.2 and later v1.7.1).
