@@ -157,7 +157,7 @@ public class DiffUtils {
 		}
 
 		public PathChangeModel addPath(DiffEntry entry) {
-			PathChangeModel pcm = PathChangeModel.from(entry, commitId);
+			PathChangeModel pcm = PathChangeModel.from(entry, commitId, null);
 			paths.add(pcm);
 			return pcm;
 		}
@@ -531,7 +531,7 @@ public class DiffUtils {
 		DiffStat stat = null;
 		try {
 			RawTextComparator cmp = RawTextComparator.DEFAULT;
-			DiffStatFormatter df = new DiffStatFormatter(commit.getName());
+			DiffStatFormatter df = new DiffStatFormatter(commit.getName(), repository);
 			df.setRepository(repository);
 			df.setDiffComparator(cmp);
 			df.setDetectRenames(true);

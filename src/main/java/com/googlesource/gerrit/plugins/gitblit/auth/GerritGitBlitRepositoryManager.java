@@ -115,4 +115,14 @@ public class GerritGitBlitRepositoryManager extends RepositoryManager {
 		loader.setDaemon(true);
 		loader.start();
 	}
+
+	@Override
+	public long updateLastChangeFields(org.eclipse.jgit.lib.Repository r, RepositoryModel model) {
+		try {
+			return super.updateLastChangeFields(r, model);
+		} catch (NullPointerException e) {
+			// GitBlit 1.8.0 repositorySizeCache may return null for repos not yet cached
+			return 0L;
+		}
+	}
 }

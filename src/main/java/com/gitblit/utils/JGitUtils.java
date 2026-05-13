@@ -1042,20 +1042,20 @@ public class JGitUtils {
 					tw.setRecursive(true);
 					tw.addTree(commit.getTree());
 					while (tw.next()) {
-						list.add(new PathChangeModel(tw.getPathString(), tw.getPathString(), 0, tw.getRawMode(0), tw.getObjectId(0).getName(), commit
+						list.add(new PathChangeModel(tw.getPathString(), tw.getPathString(), null, 0, tw.getRawMode(0), tw.getObjectId(0).getName(), commit
 								.getId().getName(), ChangeType.ADD));
 					}
 				}
 			} else {
 				RevCommit parent = rw.parseCommit(commit.getParent(0).getId());
-				try (DiffStatFormatter df = new DiffStatFormatter(commit.getName())) {
+				try (DiffStatFormatter df = new DiffStatFormatter(commit.getName(), repository)) {
 					df.setRepository(repository);
 					df.setDiffComparator(RawTextComparator.DEFAULT);
 					df.setDetectRenames(true);
 					List<DiffEntry> diffs = df.scan(parent.getTree(), commit.getTree());
 					for (DiffEntry diff : diffs) {
 						// create the path change model
-						PathChangeModel pcm = PathChangeModel.from(diff, commit.getName());
+						PathChangeModel pcm = PathChangeModel.from(diff, commit.getName(), repository);
 
 						if (calculateDiffStat) {
 							// update file diffstats
@@ -1130,7 +1130,7 @@ public class JGitUtils {
 
 			List<DiffEntry> diffEntries = df.scan(startCommit.getTree(), endCommit.getTree());
 			for (DiffEntry diff : diffEntries) {
-				PathChangeModel pcm = PathChangeModel.from(diff, endCommit.getName());
+				PathChangeModel pcm = PathChangeModel.from(diff, endCommit.getName(), repository);
 				list.add(pcm);
 			}
 			Collections.sort(list);
@@ -1222,7 +1222,7 @@ public class JGitUtils {
 		} catch (Throwable t) {
 			error(t, null, "failed to retrieve blob size for " + tw.getPathString());
 		}
-		return new PathModel(name, tw.getPathString(), size, tw.getFileMode(0).getBits(), objectId.getName(), commit.getName());
+		return new PathModel(name, tw.getPathString(), null, size, tw.getFileMode(0).getBits(), objectId.getName(), commit.getName());
 	}
 
 	/**
@@ -1256,7 +1256,7 @@ public class JGitUtils {
 				}
 			}
 
-			return new PathModel(pathString, tw.getPathString(), size, tw.getFileMode(0).getBits(), tw.getObjectId(0).getName(), commit.getName());
+			return new PathModel(pathString, tw.getPathString(), null, size, tw.getFileMode(0).getBits(), tw.getObjectId(0).getName(), commit.getName());
 		}
 	}
 
