@@ -497,7 +497,7 @@ public abstract class BasePage extends SessionPage {
 			for (String line : lines) {
 				sb.append(line).append('\n');
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 
 		} finally {
 			if (is != null) {

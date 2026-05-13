@@ -1,6 +1,6 @@
 # GitBlit plugin
 
-This plugin integrates [GitBlit](https://github.com/gitblit/gitblit) **1.9.3** as a repository browser into [Gerrit](https://code.google.com/p/gerrit/),
+This plugin integrates [GitBlit](https://github.com/gitblit/gitblit) **1.10.0** as a repository browser into [Gerrit](https://code.google.com/p/gerrit/),
 with full SSO through Gerrit.
 
 * License: [Apache Public License 2.0](http://www.apache.org/licenses/LICENSE-2.0)
