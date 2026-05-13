@@ -73,18 +73,18 @@ public class GitBlitWebUrls implements BranchWebLink, FileWebLink, PatchSetWebLi
 	}
 
 	@Override
-	public WebLinkInfo getPatchSetWebLink(String projectName, String commit) {
+	public WebLinkInfo getPatchSetWebLink(String projectName, String commit, String commitMessage, String branchName) {
 		return new WebLinkInfo(name, null, baseUrl + String.format("commit/?r=%s&h=%s", projectName, commit), Target.BLANK);
 	}
 
 	@Override
-	public WebLinkInfo getParentWebLink(String projectName, String commit) {
-		return getPatchSetWebLink(projectName, commit);
+	public WebLinkInfo getParentWebLink(String projectName, String commit, String commitMessage, String branchName) {
+		return getPatchSetWebLink(projectName, commit, commitMessage, branchName);
 	}
 
 	@Override
-	public WebLinkInfo getFileWebLink(String projectName, String revision, String fileName) {
-		return new WebLinkInfo(name, null, baseUrl + String.format("blob/?r=%s&h=%s&f=%s", projectName, revision, fileName), Target.BLANK);
+	public WebLinkInfo getFileWebLink(String projectName, String revision, String hash, String fileName) {
+		return new WebLinkInfo(name, null, baseUrl + String.format("blob/?r=%s&h=%s&f=%s", projectName, hash, fileName), Target.BLANK);
 	}
 
 	@Override

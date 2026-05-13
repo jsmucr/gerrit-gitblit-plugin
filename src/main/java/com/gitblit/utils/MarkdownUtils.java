@@ -30,7 +30,7 @@ import org.apache.commons.io.IOUtils;
 
 import com.gitblit.IStoredSettings;
 import com.gitblit.Keys;
-import com.vladsch.flexmark.ast.Node;
+import com.vladsch.flexmark.util.ast.Node;
 import com.vladsch.flexmark.ext.wikilink.WikiImage;
 import com.vladsch.flexmark.ext.wikilink.internal.WikiLinkLinkResolver;
 import com.vladsch.flexmark.html.HtmlRenderer;
@@ -40,7 +40,7 @@ import com.vladsch.flexmark.html.renderer.LinkResolverContext;
 import com.vladsch.flexmark.html.renderer.ResolvedLink;
 import com.vladsch.flexmark.parser.Parser;
 import com.vladsch.flexmark.profiles.pegdown.PegdownOptionsAdapter;
-import com.vladsch.flexmark.util.options.MutableDataHolder;
+import com.vladsch.flexmark.util.data.MutableDataHolder;
 
 /**
  * Utility methods for transforming raw markdown text to html.
@@ -140,7 +140,7 @@ public class MarkdownUtils {
 		private class Factory extends IndependentLinkResolverFactory {
 
 			@Override
-			public LinkResolver create(final LinkResolverContext context) {
+			public LinkResolver apply(final LinkResolverContext context) {
 				return new Resolver(context);
 			}
 		}

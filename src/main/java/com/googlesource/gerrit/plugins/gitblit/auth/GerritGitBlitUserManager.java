@@ -66,8 +66,9 @@ public class GerritGitBlitUserManager implements IUserManager {
 		};
 		this.anonymousUser = anonymousUser;
 		this.getDiffPreferences = getDiffPreferences;
-		if (!settings.getBoolean(Keys.web.authenticateViewPages, false) && !fixAnonymousUser()) {
-			settings.saveSettings(ImmutableMap.of(Keys.web.authenticateViewPages, Boolean.TRUE.toString()));
+		if (!fixAnonymousUser()) {
+			log.warn("Cannot redefine anonymous user; anonymous access will use default GitBlit permissions. "
+					+ "Gerrit's own permission system still controls repository visibility.");
 		}
 	}
 
