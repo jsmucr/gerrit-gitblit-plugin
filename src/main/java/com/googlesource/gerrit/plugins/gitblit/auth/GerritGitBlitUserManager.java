@@ -28,7 +28,6 @@ import com.gitblit.manager.IUserManager;
 import com.gitblit.models.TeamModel;
 import com.gitblit.models.UserModel;
 import com.google.common.base.Strings;
-import com.google.common.collect.ImmutableMap;
 import com.google.gerrit.extensions.registration.DynamicItem;
 import com.google.gerrit.httpd.WebSession;
 import com.google.gerrit.server.AnonymousUser;
@@ -61,7 +60,8 @@ public class GerritGitBlitUserManager implements IUserManager {
 		this.userProvider = new Provider<CurrentUser>() {
 			@Override
 			public CurrentUser get() {
-				return gerritSession.get().getUser();
+				WebSession session = gerritSession.get();
+				return session.getUser();
 			}
 		};
 		this.anonymousUser = anonymousUser;

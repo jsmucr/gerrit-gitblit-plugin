@@ -241,7 +241,7 @@ limitations under the License.
                 <Implementation-Title>Plugin ${project.artifactId}</Implementation-Title>
                 <Implementation-Version>${project.version}</Implementation-Version>
                 <Gerrit-ApiType>${Gerrit-ApiType}</Gerrit-ApiType>
-                <Gerrit-ApiVersion>3.10.9</Gerrit-ApiVersion>
+                <Gerrit-ApiVersion>${Gerrit-ApiVersion}</Gerrit-ApiVersion>
                 <Gerrit-ReloadMode>${Gerrit-ReloadMode}</Gerrit-ReloadMode>
               </manifestEntries>
             </transformer>
