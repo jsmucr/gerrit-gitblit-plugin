@@ -200,7 +200,8 @@ public class GerritGitBlitAuthenticationManager implements IAuthenticationManage
 
 		try {
 			AuthResult authResp = gerritAccountManager.authenticate(who);
-			gerritSession.get().login(authResp, false);
+			WebSession session = gerritSession.get();
+			session.login(authResp, false);
 			log.info("Logged in {}", username);
 			return loggedIn(httpRequest, userManager.getUserModel(username), password, authResp);
 		} catch (AccountException | IOException e) {
@@ -274,7 +275,8 @@ public class GerritGitBlitAuthenticationManager implements IAuthenticationManage
 
 	@Override
 	public void logout(HttpServletRequest request, HttpServletResponse response, UserModel user) {
-		gerritSession.get().logout();
+		WebSession session = gerritSession.get();
+		session.logout();
 		setCookie(request, response, null);
 	}
 
@@ -323,15 +325,18 @@ public class GerritGitBlitAuthenticationManager implements IAuthenticationManage
 	}
 
 	private UserModel loggedIn(HttpServletRequest request, UserModel user, String credentials, AuthResult authentication) {
-		if (authentication != null && !gerritSession.get().getUser().isIdentifiedUser()) {
-			log.warn("Setting account after log-in for " + user.getName());
-			// We just logged in via Gerrit. However, if somehow somewhere some code called getCurrentUser() on that WebSession object before,
-			// the "current user object" remains stuck on the previous value. Happens for instance in WrappedSyndicationFilter after the 401
-			// challenge. Frankly said, I don't know if that is a bug in Gerrit, or what's up. Methinks CacheBasedWebSession.login() should
-			// (re-)set its private field "user" to null, so that the next call to getCurrentUser() re-computes the user object. We can get
-			// around this by forcing the account id to the account we just authenticated. In this request, this user won't be able to do
-			// Gerrit administration, but we're inside GitBlit anyway, so there's no need for this anyway.
-			gerritSession.get().setUserAccountId(authentication.getAccountId());
+		if (authentication != null) {
+			WebSession session = gerritSession.get();
+			if (!session.getUser().isIdentifiedUser()) {
+				log.warn("Setting account after log-in for " + user.getName());
+				// We just logged in via Gerrit. However, if somehow somewhere some code called getCurrentUser() on that WebSession object before,
+				// the "current user object" remains stuck on the previous value. Happens for instance in WrappedSyndicationFilter after the 401
+				// challenge. Frankly said, I don't know if that is a bug in Gerrit, or what's up. Methinks CacheBasedWebSession.login() should
+				// (re-)set its private field "user" to null, so that the next call to getCurrentUser() re-computes the user object. We can get
+				// around this by forcing the account id to the account we just authenticated. In this request, this user won't be able to do
+				// Gerrit administration, but we're inside GitBlit anyway, so there's no need for this anyway.
+				session.setUserAccountId(authentication.getAccountId());
+			}
 		}
 		if (request != null) {
 			request.getSession().setAttribute(Constants.ATTRIB_AUTHTYPE, AuthenticationType.CREDENTIALS);

@@ -61,16 +61,21 @@ public class GerritAuthenticationFilter {
 		String hdr = httpRequest.getHeader("Authorization");
 		if (hdr != null) {
 			return filterBasicAuth((HttpServletRequest) request, (HttpServletResponse) response, hdr);
-		} else if (webSession.get().isSignedIn()) {
-			return filterSessionAuth(webSession, (HttpServletRequest) request);
+		}
+		WebSession session = webSession.get();
+		if (session.isSignedIn()) {
+			request.setAttribute("gerrit-username", session.getUser().getUserName());
+			request.setAttribute("gerrit-token", session.getSessionId());
+			return true;
 		} else {
 			return true;
 		}
 	}
 
 	public boolean filterSessionAuth(final DynamicItem<WebSession> webSession, HttpServletRequest request) {
-		request.setAttribute("gerrit-username", webSession.get().getUser().getUserName());
-		request.setAttribute("gerrit-token", webSession.get().getSessionId());
+		WebSession session = webSession.get();
+		request.setAttribute("gerrit-username", session.getUser().getUserName());
+		request.setAttribute("gerrit-token", session.getSessionId());
 		return true;
 	}
 
