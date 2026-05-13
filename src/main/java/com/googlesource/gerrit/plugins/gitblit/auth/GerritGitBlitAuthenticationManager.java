@@ -60,6 +60,7 @@ public class GerritGitBlitAuthenticationManager implements IAuthenticationManage
 	private final IStoredSettings settings;
 	private final String gerritUrl;
 	private final String externalLogoutUrl;
+	private final AuthRequest.Factory authRequestFactory;
 
 	/**
 	 * Path part of the canonical plugin URL.
@@ -69,7 +70,8 @@ public class GerritGitBlitAuthenticationManager implements IAuthenticationManage
 	@Inject
 	public GerritGitBlitAuthenticationManager(final AccountManager gerritAccountManager, final DynamicItem<WebSession> gerritSession,
 			final GerritGitBlitUserManager userManager, final IStoredSettings settings, @PluginName String pluginName,
-			@PluginCanonicalWebUrl String pluginUrl, @CanonicalWebUrl String canonicalGerritUrl, AuthConfig authConfig) {
+			@PluginCanonicalWebUrl String pluginUrl, @CanonicalWebUrl String canonicalGerritUrl, AuthConfig authConfig,
+			AuthRequest.Factory authRequestFactory) {
 		this.gerritAccountManager = gerritAccountManager;
 		this.gerritSession = gerritSession;
 		this.userManager = userManager;
@@ -77,6 +79,7 @@ public class GerritGitBlitAuthenticationManager implements IAuthenticationManage
 		this.gerritUrl = canonicalGerritUrl;
 		this.externalLogoutUrl = authConfig.getLogoutURL();
 		this.hostRelativePluginPath = extractPluginPath(pluginUrl, pluginName);
+		this.authRequestFactory = authRequestFactory;
 	}
 
 	/**
@@ -192,7 +195,7 @@ public class GerritGitBlitAuthenticationManager implements IAuthenticationManage
 			return null;
 		}
 
-		AuthRequest who = AuthRequest.forUser(username);
+		AuthRequest who = authRequestFactory.createForUser(username);
 		who.setPassword(password);
 
 		try {
