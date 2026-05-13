@@ -69,12 +69,12 @@ public class GitBlitWebUrls implements BranchWebLink, FileWebLink, PatchSetWebLi
 
 	@Override
 	public WebLinkInfo getProjectWeblink(String projectName) {
-		return new WebLinkInfo(name, null, baseUrl + String.format("summary/?r=%s", projectName), Target.BLANK);
+		return new WebLinkInfo(name, null, baseUrl + String.format("summary/?r=%s", projectName));
 	}
 
 	@Override
 	public WebLinkInfo getPatchSetWebLink(String projectName, String commit, String commitMessage, String branchName) {
-		return new WebLinkInfo(name, null, baseUrl + String.format("commit/?r=%s&h=%s", projectName, commit), Target.BLANK);
+		return new WebLinkInfo(name, null, baseUrl + String.format("commit/?r=%s&h=%s", projectName, commit));
 	}
 
 	@Override
@@ -84,21 +84,21 @@ public class GitBlitWebUrls implements BranchWebLink, FileWebLink, PatchSetWebLi
 
 	@Override
 	public WebLinkInfo getFileWebLink(String projectName, String revision, String hash, String fileName) {
-		return new WebLinkInfo(name, null, baseUrl + String.format("blob/?r=%s&h=%s&f=%s", projectName, hash, fileName), Target.BLANK);
+		return new WebLinkInfo(name, null, baseUrl + String.format("blob/?r=%s&h=%s&f=%s", projectName, hash, fileName));
 	}
 
 	@Override
 	public WebLinkInfo getBranchWebLink(String projectName, String branchName) {
-		return new WebLinkInfo(name, null, baseUrl + String.format("log/?r=%s&h=%s", projectName, branchName), Target.BLANK);
+		return new WebLinkInfo(name, null, baseUrl + String.format("log/?r=%s&h=%s", projectName, branchName));
 	}
 
 	@Override
 	public WebLinkInfo getTagWebLink(String projectName, String tagName) {
-		return new WebLinkInfo(name, null, baseUrl + String.format("log/?r=%s&h=%s", projectName, tagName), Target.BLANK);
+		return new WebLinkInfo(name, null, baseUrl + String.format("log/?r=%s&h=%s", projectName, tagName));
 	}
 
 	@Override
 	public WebLinkInfo getFileHistoryWebLink(String projectName, String revision, String fileName) {
-		return new WebLinkInfo(name, null, baseUrl + String.format("history/?f=%s&r=%s&h=%s", fileName, projectName, revision), Target.BLANK);
+		return new WebLinkInfo(name, null, baseUrl + String.format("history/?f=%s&r=%s&h=%s", fileName, projectName, revision));
 	}
 }

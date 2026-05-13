@@ -16,10 +16,10 @@
 package com.gitblit.utils;
 
 import static com.vladsch.flexmark.ext.wikilink.WikiLinkExtension.WIKI_LINK;
-import static com.vladsch.flexmark.profiles.pegdown.Extensions.ALL;
-import static com.vladsch.flexmark.profiles.pegdown.Extensions.ANCHORLINKS;
-import static com.vladsch.flexmark.profiles.pegdown.Extensions.SMARTYPANTS;
-import static com.vladsch.flexmark.profiles.pegdown.Extensions.HARDWRAPS;
+import static com.vladsch.flexmark.profile.pegdown.Extensions.ALL;
+import static com.vladsch.flexmark.profile.pegdown.Extensions.ANCHORLINKS;
+import static com.vladsch.flexmark.profile.pegdown.Extensions.SMARTYPANTS;
+import static com.vladsch.flexmark.profile.pegdown.Extensions.HARDWRAPS;
 
 import java.io.IOException;
 import java.io.Reader;
@@ -36,10 +36,10 @@ import com.vladsch.flexmark.ext.wikilink.internal.WikiLinkLinkResolver;
 import com.vladsch.flexmark.html.HtmlRenderer;
 import com.vladsch.flexmark.html.IndependentLinkResolverFactory;
 import com.vladsch.flexmark.html.LinkResolver;
-import com.vladsch.flexmark.html.renderer.LinkResolverContext;
+import com.vladsch.flexmark.html.renderer.LinkResolverBasicContext;
 import com.vladsch.flexmark.html.renderer.ResolvedLink;
 import com.vladsch.flexmark.parser.Parser;
-import com.vladsch.flexmark.profiles.pegdown.PegdownOptionsAdapter;
+import com.vladsch.flexmark.profile.pegdown.PegdownOptionsAdapter;
 import com.vladsch.flexmark.util.data.MutableDataHolder;
 
 /**
@@ -121,12 +121,12 @@ public class MarkdownUtils {
 
 		private class Resolver extends WikiLinkLinkResolver {
 
-			public Resolver(LinkResolverContext context) {
+			public Resolver(LinkResolverBasicContext context) {
 				super(context);
 			}
 
 			@Override
-			public ResolvedLink resolveLink(Node node, LinkResolverContext context, ResolvedLink link) {
+			public ResolvedLink resolveLink(Node node, LinkResolverBasicContext context, ResolvedLink link) {
 				if (link.getLinkType() == WIKI_LINK && link.getUrl().indexOf("://") < 0) {
 					ResolvedLink result = resolver.link(link, node instanceof WikiImage);
 					if (result != null) {
@@ -140,7 +140,7 @@ public class MarkdownUtils {
 		private class Factory extends IndependentLinkResolverFactory {
 
 			@Override
-			public LinkResolver apply(final LinkResolverContext context) {
+			public LinkResolver apply(final LinkResolverBasicContext context) {
 				return new Resolver(context);
 			}
 		}
